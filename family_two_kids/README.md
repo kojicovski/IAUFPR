@@ -22,6 +22,7 @@ Agora, podemos perguntar: qual a probabilidade de o evento “as duas crianças 
 Utilizando a probabilidade condicional, temos:
 
 > P (B | G) = P (B, G) / P (G) =P (B) / P (G) = 1/2
+> 
 > P (B | G) =  (1/4) / (1/2) = 1/2
 
 Para que P(B) aconteça, necessariamente P(G) precisa também ocorrer: P(B/G) / P(G). 
@@ -34,7 +35,9 @@ Os eventos B e L (“as duas crianças são meninas e ao menos uma delas é uma 
 
 Assim, temos:
 > Solução = {FF, FM, MF}
+> 
 > P (B | L) = P (B, L) / P (L) = P (B) / P (L) = 1/3
+> 
 > P (B | L) = (1 / 3) /  (2 / 3 ) = 1 / 3
 
 Observando a solução, é possível identificar que a probabilidade de ser um menino e uma menina é duas vezes maior (1/3 * 1/3) que de ser duas meinas (1/3).
