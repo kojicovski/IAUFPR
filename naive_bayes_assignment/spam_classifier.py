@@ -1,9 +1,18 @@
 from typing import TypeVar, List, Tuple, Dict, Iterable, NamedTuple, Set
 from collections import defaultdict, Counter
+from nltk.stem import PorterStemmer
 import re
 import random
 import math
+import pandas as pd
 X = TypeVar('X')  # generic type to represent a data point
+
+#########################INÍCIO LINHAS ALTERADAS###############################
+##########################- [12, 15, 51, 66]###################################
+count_min = 3
+
+#instanciando classe PorterStemmer()
+ps = PorterStemmer()
 
 def split_data(data: List[X], prob: float) -> Tuple[List[X], List[X]]:
     """Split data into fractions [prob, 1 - prob]"""
@@ -16,8 +25,8 @@ def tokenize(text: str) -> Set[str]:
     text = text.lower()                         # Convert to lowercase,
     all_words = re.findall("[a-z0-9']+", text)  # extract the words, and
     return set(all_words)                       # remove duplicates.
-
-assert tokenize("Data Science is science") == {"data", "science", "is"}
+    
+# assert tokenize("Data Science is science") == {"data", "science", "is"}
 
 class Message(NamedTuple):
     text: str
@@ -39,14 +48,29 @@ class NaiveBayesClassifier:
                 self.spam_messages += 1
             else:
                 self.ham_messages += 1
+##################################ALTERADO####################################
+            #criando data_frame para checar quantidade de palavras repetidas
+            data_frame = pd.DataFrame(message.text.split(' '), 
+                                      columns=["token"])
+            tokens = data_frame.groupby('token').size()
+            min_token = tokens.index[tokens >= count_min]
+            
+            sentence = ''
+            #validando se min_token não é vazio e retornando sentence como str
+            if len(min_token) > 1:
+                for token in list(min_token):
+                    sentence = str(token) + " " + sentence
 
             # Increment word counts
-            for token in tokenize(message.text):
-                self.tokens.add(token)
+            for token in tokenize(sentence):
+##################################ALTERADO####################################
+                #Chamando método stem para checar palavras equivalentes
+                stem = ps.stem(token)
+                self.tokens.add(stem)
                 if message.is_spam:
-                    self.token_spam_counts[token] += 1
+                    self.token_spam_counts[stem] += 1
                 else:
-                    self.token_ham_counts[token] += 1
+                    self.token_ham_counts[stem] += 1
 
     def probabilities(self, token: str) -> Tuple[float, float]:
         """returns P(token | spam) and P(token | not spam)"""
@@ -86,40 +110,40 @@ class NaiveBayesClassifier:
 # Testes do Modelo
 # 
 
-messages = [Message("spam rules", is_spam=True),
+messages = [Message("spam rules a b c d e f", is_spam=True),
             Message("ham rules", is_spam=False),
             Message("hello ham", is_spam=False)]
 
-model = NaiveBayesClassifier(k=0.5)
-model.train(messages)
+# model = NaiveBayesClassifier(k=0.5)
+# model.train(messages)
 
-assert model.tokens == {"spam", "ham", "rules", "hello"}
-assert model.spam_messages == 1
-assert model.ham_messages == 2
-assert model.token_spam_counts == {"spam": 1, "rules": 1}
-assert model.token_ham_counts == {"ham": 2, "rules": 1, "hello": 1}
+# assert model.tokens == {"spam", "ham", "rules", "hello"}
+# assert model.spam_messages == 1
+# assert model.ham_messages == 2
+# assert model.token_spam_counts == {"spam": 1, "rules": 1}
+# assert model.token_ham_counts == {"ham": 2, "rules": 1, "hello": 1}
 
-text = "hello spam"
+# text = "hello spam"
 
-probs_if_spam = [
-    (1 + 0.5) / (1 + 2 * 0.5),      # "spam"  (present)
-    1 - (0 + 0.5) / (1 + 2 * 0.5),  # "ham"   (not present)
-    1 - (1 + 0.5) / (1 + 2 * 0.5),  # "rules" (not present)
-    (0 + 0.5) / (1 + 2 * 0.5)       # "hello" (present)
-]
+# probs_if_spam = [
+#     (1 + 0.5) / (1 + 2 * 0.5),      # "spam"  (present)
+#     1 - (0 + 0.5) / (1 + 2 * 0.5),  # "ham"   (not present)
+#     1 - (1 + 0.5) / (1 + 2 * 0.5),  # "rules" (not present)
+#     (0 + 0.5) / (1 + 2 * 0.5)       # "hello" (present)
+# ]
 
-probs_if_ham = [
-    (0 + 0.5) / (2 + 2 * 0.5),      # "spam"  (present)
-    1 - (2 + 0.5) / (2 + 2 * 0.5),  # "ham"   (not present)
-    1 - (1 + 0.5) / (2 + 2 * 0.5),  # "rules" (not present)
-    (1 + 0.5) / (2 + 2 * 0.5),      # "hello" (present)
-]
+# probs_if_ham = [
+#     (0 + 0.5) / (2 + 2 * 0.5),      # "spam"  (present)
+#     1 - (2 + 0.5) / (2 + 2 * 0.5),  # "ham"   (not present)
+#     1 - (1 + 0.5) / (2 + 2 * 0.5),  # "rules" (not present)
+#     (1 + 0.5) / (2 + 2 * 0.5),      # "hello" (present)
+# ]
 
-p_if_spam = math.exp(sum(math.log(p) for p in probs_if_spam))
-p_if_ham = math.exp(sum(math.log(p) for p in probs_if_ham))
+# p_if_spam = math.exp(sum(math.log(p) for p in probs_if_spam))
+# p_if_ham = math.exp(sum(math.log(p) for p in probs_if_ham))
 
-# Should be about 0.83
-assert math.isclose(model.predict(text), p_if_spam / (p_if_spam + p_if_ham))
+# # Should be about 0.83
+# assert math.isclose(model.predict(text), p_if_spam / (p_if_spam + p_if_ham))
 
 ###############################################################################
 # Exemplo com mensagens verdadeiras
