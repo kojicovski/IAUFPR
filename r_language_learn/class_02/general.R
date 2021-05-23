@@ -116,3 +116,38 @@ head(data1)
 write.table(data2, "r_language_learn/class_02/iris2.csv", 
             sep="**",dec=".", row.names=F, col.names=T, quote=F)
 head(data2)
+
+##apply function
+matrix1 <- matrix(1:100000, nrow=100000, ncol=10)
+head(matrix1)
+tail(matrix1)
+#row sum
+apply(matrix1, 1, sum)
+#col sum
+apply(matrix1, 2, sum)
+
+####
+age1 <- c(56, 34, 67, 33, 25, 28)
+weight1 <- c(78, 67, 56, 44, 56, 89)
+height1 <- c(165, 171, 167, 167, 166, 181)
+data3 <- data.frame(age1, weight1, height1)
+
+#col mean()
+apply(data3, 2, mean)
+#col max()
+apply(data3, 2, max)
+#sqrt --> output matrix
+a <- sapply(data3, sqrt)
+a
+class(a)
+#sqrt --> output list
+b <- lapply(data3, sqrt)
+b
+class(b)
+
+#function x*20
+mult <- function(x) {
+    return (x*20)
+}
+
+sapply(data3, mult)
