@@ -96,3 +96,23 @@ mean(people$age)
 people[people$sex=="female",]
 #count female
 nrow(people[people$sex=="female",])
+
+######files
+data <- read.csv("http://www.razer.net.br/datasets/fruitohms.csv")
+head(data)
+
+biomass <- read.csv2("http://www.razer.net.br/datasets/Biomassa_REG.csv")
+head(biomass)
+
+fertility <- read.csv("http://www.razer.net.br/datasets/fertility.csv")
+head(fertility)
+
+data1 <- iris
+data2 <- iris
+write.table(data1, "r_language_learn/class_02/iris.txt", 
+            sep="**",dec=".", row.names=F,col.names=F)
+head(data1)
+
+write.table(data2, "r_language_learn/class_02/iris2.csv", 
+            sep="**",dec=".", row.names=F, col.names=T, quote=F)
+head(data2)
