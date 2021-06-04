@@ -59,10 +59,16 @@ rf <- train(VOL~., data=train_, method="rf", linout=T)
 predict.rf <- predict(rf, test)
 
 rf_r2_result <- r2(test$VOL, predict.rf)
-#rf_r2_result
+rf_r2_result
 
 rf_Syx_result <- Syx(test$VOL, predict.rf, length(predict.rf))
-#rf_Syx_result
+rf_Syx_result
+
+#resid graph
+plot(resid(rf), ylab = 'Resid', main = 'Random Forest Model')
+abline(0, 0, col = 'red')
+
+plot(dnorm(rf), ylab = 'y', main = 'Random Forest Model')
 
 #Alometric method
 set.seed(7)
