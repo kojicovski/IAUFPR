@@ -74,4 +74,4 @@ saveRDS(best_model_rf,"~/Documents/github/IAUFPR/machine_learning/randonForest/b
 ### LER E APLICAR O MODELO
 modelo_lido <- readRDS("~/Documents/github/IAUFPR/machine_learning/randonForest/best_rf.RDS")
 novas_predicoes <- predict(modelo_lido, teste)
-confusionMatrix(novas_predicoes, as.factor(teste$tipo))
+#confusionMatrix(novas_predicoes, as.factor(teste$tipo))

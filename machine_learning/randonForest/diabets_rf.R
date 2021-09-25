@@ -59,7 +59,7 @@ confusionMatrix(predict.rf, as.factor(teste$diabetes))
 tuneGrid = expand.grid(mtry=c(9))
 
 set.seed(4)
-best_model_rf <- train(diabetes~., data=data, method="rf", trControl=ctrl, tuneGrid=tuneGrid)
+best_model_rf <- train(diabetes~., data=treino, method="rf", trControl=ctrl, tuneGrid=tuneGrid)
 best_model_rf
 
 best_predict.rf <- predict(best_model_rf, teste)
