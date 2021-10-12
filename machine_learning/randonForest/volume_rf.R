@@ -44,7 +44,7 @@ Syx <- function(obs, pred, n){
 r2(teste$Volume, predicoes.rf)
 Syx(teste$Volume, predicoes.rf, length(predicoes.rf))
 mae(teste$Volume, predicoes.rf)
-#cor(teste$Volume, teste$Idade, method="pearson")
+cor(teste$Volume, teste$Idade, method="pearson")
 
 #### Cross-validation RF
 ctrl <- trainControl(method = "cv", number = 10)
@@ -59,6 +59,7 @@ r2(predicoes.rf ,teste$Volume)
 Syx(teste$Volume, predicoes.rf, length(predicoes.rf))
 rmse(teste$Volume, predicoes.rf)
 mae(teste$Volume, predicoes.rf)
+cor(teste$Volume, predicoes.rf, method="pearson")
 
 #### Vários mtry
 tuneGrid = expand.grid(mtry=c(2, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23))
@@ -75,6 +76,7 @@ r2(tun_predict.rf,teste$Volume)
 Syx(teste$Volume, tun_predict.rf, length(tun_predict.rf))
 rmse(teste$Volume, tun_predict.rf)
 mae(teste$Volume, tun_predict.rf)
+cor(teste$Volume, tun_predict.rf, method="pearson")
 
 ### SALVAR O MELHOR MODELO PARA USO NA PRÁTICA
 

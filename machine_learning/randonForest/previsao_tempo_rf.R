@@ -74,5 +74,7 @@ saveRDS(best_model_rf,"~/Documents/github/IAUFPR/machine_learning/randonForest/p
 
 ### LER E APLICAR O MODELO
 modelo_lido <- readRDS("~/Documents/github/IAUFPR/machine_learning/randonForest/previsao_best_rf.RDS")
-novas_predicoes <- predict(modelo_lido, teste)
-confusionMatrix(novas_predicoes, as.factor(teste$chuva))
+predict_best <- predict(modelo_lido, teste)
+result = cbind(teste, predict_best)
+
+View(result)

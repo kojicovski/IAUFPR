@@ -72,5 +72,7 @@ saveRDS(best_model_rf,"~/Documents/github/IAUFPR/machine_learning/randonForest/d
 
 ### LER E APLICAR O MODELO
 modelo_lido <- readRDS("~/Documents/github/IAUFPR/machine_learning/randonForest/diabets_best_rf.RDS")
-novas_predicoes <- predict(modelo_lido, teste)
-confusionMatrix(novas_predicoes, as.factor(teste$diabetes))
+predict_best <- predict(modelo_lido, teste)
+result = cbind(teste, predict_best)
+
+View(result)
