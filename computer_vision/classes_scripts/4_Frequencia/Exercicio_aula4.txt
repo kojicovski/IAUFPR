@@ -1,0 +1,7 @@
+Exercícios:
+Informação: todas as imagens estão no diretório "images".
+
+1 - Faça um programa em Python que leia as imagens do diretório e aplique filtros de aguçamento como: Sobel, Laplace e Canny.
+2 - Faça um programa que leia as imagens e aplique os filtros com transformada de Hough. Utilizar as duas versões do filtro uma para retas e outras para círculos
+3 - Na pasta Fourier verificar o arquivo p1.py e alterar o raio do círculo gerado e verificar qual o impacto da imagem resultante. 
+4 - No mesmo programa tirar o comentário da linha 33 e verificar o que acontece com a imagem resultante. 

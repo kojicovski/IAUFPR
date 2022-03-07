@@ -1,0 +1,1 @@
+Elabora um programa com o OpenCV para segmentar as imagens que estão no diretório 6_Exercicio/images. As imagens foram alteradas e será necessário unir todos os conhecimentos teóricos adquiridos até o momento para obter uma segmentação aceitável.
